@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DHL Demo</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+</style>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	  <link href='css/main.css' rel='stylesheet' />
+
+  </head>
+  <body>
+<!--	 
+<div id="whilebox-container">
+	<div id="blackbox">
+		<div id="activeBox">
+			<div id="activeAirp">
+				 <input type="text" name="origin" placeholder="origin"><br>
+				 <input type="text" name="destination" placeholder="destination"><br>
+				 <input type="text" name="day" placeholder="Day"><br>
+				 <input type="text" name="destination" placeholder="Origin facility cutoff time"><br>
+				 <input type="text" name="origin" placeholder="network product code"><br>
+				  <input type="submit" value="recommend"> 
+
+ 			</div>
+			 
+		</div>
+ 		 
+		 
+		<div id="searchBox">
+			asd
+		</div>
+	</div>
+	 <div id="tabs">
+		<ul class="tab-links">
+			<li id="hide-tab">
+				<p class="arrow">?</p>
+				<a> Hide</a>
+			</li>
+		</ul>
+	</div>
+</div>
+-->
+
+<div id="blackbox-container">
+	<div id="blackbox">
+		<div id="activeBox">
+			<div id="activeAirp">
+				<img id="imgIcon" src="./images/Origin.png">
+				<select id = "origin">
+				<option value="Origin">Origin</option>	
+				</select>
+				<img id="imgIcon" src="./images/Destination.png">
+				 <select id = "destination">
+					<option value="Destination">Destination</option>
+				</select>
+				<img id="imgIcon" src="./images/Day.png"> 
+				<select id = "weekday">
+					<option value="Day">Day</option>
+				  <option value="Monday">Monday</option>	
+				  <option value="Tuesday">Tuesday</option>					   
+				  <option value="Wednesday">Wednesday</option>					   
+  				  <option value="Thursday">Thursday</option>					   
+				  <option value="Friday">Friday</option>					   
+				  <option value="Saturday">Saturday</option>					   
+				  <option value="Sunday">Sunday</option>	 
+				</select>
+				<img id="imgIcon" src="./images/Origin Facility Cut Off Time.png"> 
+				<select id = "cot">
+					<option value="cot" >Origin facility cutoff time</option>
+ 				</select>
+				<img id="imgIcon" src="./images/Network Product Code.png">
+				<select id = "npc">
+					<option value="npc" >Network Product Code</option>
+ 				</select><br>
+				 <button id="submitBtn" onclick="">Recommend</button>
+			</div>
+			 
+		</div>
+		<div class="bar"></div>		 
+		 
+		<!--<div id="searchBox">
+			 ABCD
+		</div> -->
+	</div>
+	<div id="tabs">
+		<ul class="tab-links">
+			<li id="hide-tab">
+				<a><img src="./images/Left Arrow.png" style="height:20px"></a>
+				<!--<a> Hide</a> -->
+			</li>
+			 
+		</ul>
+	</div>
+</div>
+
+<div id="show-tab">
+	<a><img src="./images/Right Arrow.png" style="height:20px"></a>
+	<!--<a><p class="arrow">&#65516;</p></a>
+	<a> Hide</a> -->
+</div>
+
+
+
+<div id="show-result">
+	<hr>
+		<div id="shortestPath"> 
+			<div class="STTPath">
+				<div class="STTLabel"><label>Shortest Transit Time</label></div> 
+				<div class="STTDuration "><label>Duration: </label><label class="flightDuration">  15h 55m </label></div>
+				<label class="STTRoute">HKG:HKC| HKG:HUB| CVG:HUB| COP:COP</label>
+				<div>
+					<div class="STTTimePath"><label class="STTTime STTTimeStart"> 02:00 </label><label class="STTTimeDur flightDuration"> 15h 55m</label>
+						<label class="STTTime STTTimeEnd"> 17:55 </label></div>
+					<div class="showTransit">
+						<img class="imgTransit" src="./images/Dot_Grey.png">
+					<div class="borderDiv"></div>
+					<img class="imgTransit" src="./images/Dot_Red.png">
+					<div class="borderDiv"></div>
+					<img class="imgTransitAero" src="./images/Aeroplane.png">
+					</div>
+				<div class="STTTimePath "><label class="STTAirP startPoint"> HKG:HKC </label>
+					<label class="STTTimeDur STTStops" style="color: #d0021b"> 2 Stops</label>
+						<label class="STTAirP endPoint"> COP:COP </label></div>
+				</div>
+			</div>
+			<hr>
+		</div>
+		<div id="frequentPath"> 
+
+			<div class="STTPath">
+				<div class="STTLabel"><label style="color:#ff3b30">Most Frequently Used</label></div> 
+				<div class="STTDuration "><label>Count: </label><label class="frequentCount">  0 </label></div>
+				<label class="STTRoute frequentSTTRoute">HKG:HKC| HKG:HUB| CVG:HUB| COP:COP</label>
+				<div>
+					<div class="STTTimePath"><label class="STTTime frequentSTTTimeStart"> 02:00 </label>
+						<label class="STTTimeDur frequentFlightDuration"> 15h 55m</label>
+						<label class="STTTime frequentSTTTimeEnd"> 17:55 </label></div>
+					<div class="showTransit">
+						<img class="imgTransit" src="./images/Dot_Grey.png">
+					<div class="borderDiv"></div>
+					<img class="imgTransit" src="./images/Dot_Red.png">
+					<div class="borderDiv"></div>
+					<img class="imgTransitAero" src="./images/Aeroplane.png">
+					</div>
+				<div class="STTTimePath "><label class="STTAirP frequentStartPoint"> HKG:HKC </label>
+					<label class="STTTimeDur frequentSTTStops" style="color: #d0021b"> 2 Stops</label>
+						<label class="STTAirP frequentEndPoint"> COP:COP </label></div>
+				</div>
+			</div><hr>
+		</div>
+		<div id="recentPath"> 
+
+			<div class="STTPath">
+				<div class="STTLabel"><label  style="color:#8b572a">Recently Used</label></div> 
+				<div class="STTDuration "><label>Dated: </label><label class="recentFlightDated">  </label></div>
+				<label class="STTRoute recentSTTRoute">HKG:HKC| HKG:HUB| CVG:HUB| COP:COP</label>
+				<div>
+					<div class="STTTimePath"><label class="STTTime recentSTTTimeStart"> 02:00 </label>
+						<label class="STTTimeDur recentFlightDuration"> 15h 55m</label>
+						<label class="STTTime recentSTTTimeEnd"> 17:55 </label></div>
+					<div class="showTransit">
+						<img class="imgTransit" src="./images/Dot_Grey.png">
+					<div class="borderDiv"></div>
+					<img class="imgTransit" src="./images/Dot_Red.png">
+					<div class="borderDiv"></div>
+					<img class="imgTransitAero" src="./images/Aeroplane.png">
+					</div>
+				<div class="STTTimePath "><label class="STTAirP recentStartPoint"> HKG:HKC </label>
+					<label class="STTTimeDur recentSTTStops" style="color: #d0021b"> 2 Stops</label>
+						<label class="STTAirP recentEndPoint"> COP:COP </label></div>
+				</div>
+			</div><hr>
+		</div>
+		<div id="routePath1"> 
+		
+			<div class="STTPath">
+				<div class="STTLabel"><label style="color:#0079fe">Current Route 1</label></div> 
+				<div class="STTDuration "><label>Duration:</label><label class="currentFlightDuration">  15h 55m </label></div>
+				<label class="STTRoute currentSTTRoute">HKG:HKC| HKG:HUB| CVG:HUB| COP:COP</label>
+				<div>
+					<div class="STTTimePath"><label class="STTTime currentSTTTimeStart"> 02:00 </label>
+						<label class="STTTimeDur currentFlightDuration"> 15h 55m</label>
+						<label class="STTTime currentSTTTimeEnd"> 17:55 </label></div>
+					<div class="showTransit">
+						<img class="imgTransit" src="./images/Dot_Grey.png">
+					<div class="borderDiv"></div>
+					<img class="imgTransit" src="./images/Dot_Red.png">
+					<div class="borderDiv"></div>
+					<img class="imgTransitAero" src="./images/Aeroplane.png">
+					</div>
+				<div class="STTTimePath "><label class="STTAirP currentStartPoint"> HKG:HKC </label>
+					<label class="STTTimeDur currentSTTStops" style="color: #d0021b"> 2 Stops</label>
+						<label class="STTAirP currentEndPoint"> COP:COP </label></div>
+				</div>
+			</div><hr>
+		</div>
+		<div id="routePath2"> 
+			<div class="STTPath">
+				<div class="STTLabel"><label  style="color:#303030">Current Route 2</label></div> 
+				<div class="STTDuration "><label>Duration:</label><label class="current2FlightDuration">  15h 55m </label></div>
+				<label class="STTRoute current2STTRoute">HKG:HKC| HKG:HUB| CVG:HUB| COP:COP</label>
+				<div>
+					<div class="STTTimePath"><label class="STTTime current2STTTimeStart"> 02:00 </label>
+						<label class="STTTimeDur current2FlightDuration"> 15h 55m</label>
+						<label class="STTTime current2STTTimeEnd"> 17:55 </label></div>
+					<div class="showTransit">
+						<img class="imgTransit" src="./images/Dot_Grey.png">
+					<div class="borderDiv"></div>
+					<img class="imgTransit" src="./images/Dot_Red.png">
+					<div class="borderDiv"></div>
+					<img class="imgTransitAero" src="./images/Aeroplane.png">
+					</div>
+				<div class="STTTimePath "><label class="STTAirP current2StartPoint"> HKG:HKC </label>
+					<label class="STTTimeDur current2STTStops" style="color: #d0021b"> 2 Stops</label>
+						<label class="STTAirP current2EndPoint"> COP:COP </label></div>
+				</div>
+			</div>
+			</div>
+			<div id="norecord"> 
+				<div class="STTPath">
+					<div class=""><label style="color:#303030">No Matching routes</label></div>   				 
+				</div> 
+			</div>
+		</div>
+		<!--<div class="path">
+			<div class="pathLabel" style="color: #ff3b30">Most Frequently Used</div>
+			<div class="pathTime">
+				<label class="MFUDepart"> Departure</label> <label class="MFUArrival"> Arrival</label>
+				<div class="showTransitPath">
+				<label class="MFUDepartTime">02:00</label>
+				<img class="imgTransit MFUimgPos" src="./images/Dot_Red.png">
+				<label class="MFUArrivalTime">18:30</label>
+				</div>
+			<img class="pathDown" src="./images/Down.png">
+			</div>
+		</div>
+		<hr>
+		<div class="path">
+			<div class="pathLabel" style="color: #8b572a">Recently Used </div>
+			<div class="pathTime RUpathPos">
+				<label class="MFUDepart"> Departure</label> <label class="MFUArrival"> Arrival</label>
+				<div class="showTransitPath">
+				<label class="MFUDepartTime">02:00</label>
+				<img class="imgTransit MFUimgPos" src="./images/Dot_Red.png">
+				<label class="MFUArrivalTime">18:30</label>
+				</div>
+			<img class="pathDown" src="./images/Down.png">
+			</div>
+		</div>
+		<hr>
+		<div class="path">
+			<div class="pathLabel" style="color: #0079fe">QSMS1</div>
+			<div class="pathTime QSMSpathPos">
+				<label class="MFUDepart"> Departure</label> <label class="MFUArrival"> Arrival</label>
+				<div class="showTransitPath">
+				<label class="MFUDepartTime">02:00</label>
+				<img class="imgTransit MFUimgPos" src="./images/Dot_Red.png">
+				<label class="MFUArrivalTime">18:30</label>
+				</div>
+			<img class="pathDown" src="./images/Down.png">
+			</div>
+		</div>
+		<hr>
+		<div class="path">
+			<div class="pathLabel">QSMS2</div>
+			<div class="pathTime QSMSpathPos">
+				<label class="MFUDepart"> Departure</label> <label class="MFUArrival"> Arrival</label>
+				<div class="showTransitPath">
+				<label class="MFUDepartTime">02:00</label>
+				<img class="imgTransit MFUimgPos" src="./images/Dot_Red.png">
+				<label class="MFUArrivalTime">18:30</label>
+				</div>
+			<img class="pathDown" src="./images/Down.png">
+			</div>
+		</div>
+</div>-->
+
+<div id="show-popup">
+	<div class="STTPath">
+			<div class="STTLabel"><label>Shortest Transit Time</label></div> 
+			<div class="mostEff">Most Efficient</div>
+			<label class="STTRoute">HKG:HKC| HKG:HUB| CVG:HUB| COP:COP</label>
+			<div>
+				<div class="STTTimePath"><label class="STTTime STTTimeStart"> 02:00 </label><label class="STTTimeDur flightDuration"> 15h 55m</label>
+					<label class="STTTime STTTimeEnd"> 17:55 </label></div>
+				<div class="showTransit">
+					<img class="imgTransit" src="./images/Dot_Grey.png">
+				<div class="borderDiv"></div>
+				<img class="imgTransit" src="./images/Dot_Red.png">
+				<div class="borderDiv"></div>
+				<img class="imgTransitAero" src="./images/Aeroplane.png">
+				</div>
+			<div class="STTTimePath "><label class="STTAirP startPoint"> HKG:HKC </label>
+				<label class="STTTimeDur STTStops" style="color: #d0021b"> 2 Stops</label>
+					<label class="STTAirP endPoint"> COP:COP </label></div>
+			</div>
+		</div>
+</div>
+
+<!--<div id="titlebar" class="hidden">
+	<p></p>
+</div>
+-->
+<div id="tooltip"></div>
+    <div id="map"></div>
+	<script src="data/data.json"></script>
+
+	 <script src="scripts/jquery/jquery-1.10.2.min.js"></script>
+	<script src="scripts/jquery/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="scripts/offlineStore.js"></script>
+    <script src="scripts/map.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAG_gYQW22ReGWvdO1XKrAZF8A6dXSJRTI&callback=initMap&libraries=geometry"
+  type="text/javascript"></script>
+    
+  </body>
+</html>

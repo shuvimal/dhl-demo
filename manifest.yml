@@ -1,0 +1,6 @@
+applications:
+- buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
+  host: dhl-demo
+  name: dhl-demo
+  memory: 64M
+  stack: cflinuxfs2
